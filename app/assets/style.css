@@ -1,0 +1,262 @@
+/* ── Reset ── */
+* {
+    box-sizing: border-box;
+}
+
+/* ── Animated background ── */
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e4e4e7;
+    background-color: #050507;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Floating gradient blobs */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.35;
+    z-index: 0;
+    pointer-events: none;
+    animation: float 20s ease-in-out infinite alternate;
+}
+
+body::before {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+    top: -10%;
+    left: -10%;
+}
+
+body::after {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #0ea5e9 0%, transparent 70%);
+    bottom: -5%;
+    right: -10%;
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(60px, 40px) scale(1.1); }
+    100% { transform: translate(-30px, 80px) scale(0.95); }
+}
+
+/* ── Container ── */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+}
+
+/* ── Header ── */
+header {
+    text-align: center;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #fafafa;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #e4e4e7 30%, #a78bfa 70%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Projects area ── */
+.projects {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 120px);
+}
+
+/* ── Floating glass card ── */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.75rem;
+    width: 340px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    text-decoration: none;
+    color: inherit;
+    position: absolute;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+        box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.3s ease;
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.25),
+        0 1px 2px rgba(0, 0, 0, 0.15);
+    animation: cardEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.project-card:active {
+    cursor: grabbing;
+}
+
+.project-card.dragging {
+    z-index: 100;
+    box-shadow:
+        0 20px 60px rgba(124, 58, 237, 0.25),
+        0 8px 24px rgba(0, 0, 0, 0.4);
+    border-color: rgba(167, 139, 250, 0.3);
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.project-card:nth-child(1) { animation-delay: 0s; }
+.project-card:nth-child(2) { animation-delay: 0.1s; }
+.project-card:nth-child(3) { animation-delay: 0.2s; }
+.project-card:nth-child(4) { animation-delay: 0.3s; }
+
+/* Subtle shimmer overlay */
+.project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover:not(.dragging) {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 12px 40px rgba(124, 58, 237, 0.15),
+        0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+/* ── Card internals ── */
+.project-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.project-header h2 {
+    font-size: 1.2rem;
+    font-weight: 650;
+    color: #fafafa;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.language {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(255, 255, 255, 0.06);
+    color: #a1a1aa;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lang-zig {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+.lang-ts {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.project-desc {
+    font-size: 0.9rem;
+    color: #a1a1aa;
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.project-stats {
+    display: flex;
+    gap: 1.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat {
+    font-size: 0.8rem;
+    color: #71717a;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.project-card:hover .stat {
+    color: #a1a1aa;
+}
+
+/* ── Hint text ── */
+.drag-hint {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #52525b;
+    margin-top: 0.25rem;
+    letter-spacing: 0.02em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    .project-card {
+        width: 280px;
+    }
+
+    .container {
+        padding: 1.5rem 1rem;
+    }
+
+    header h1 {
+        font-size: 1.75rem;
+    }
+}
