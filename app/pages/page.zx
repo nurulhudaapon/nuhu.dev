@@ -1,47 +1,22 @@
 pub fn Page(ctx: zx.PageContext) !zx.Component {
-    const projects = [_]Project{
-        .{
-            .name = "ziex",
-            .description = "Full-stack web framework for Zig. HTML syntax within Zig code, just like JSX but for Zig!",
-            .language = "Zig",
-            .stars = 142,
-            .forks = 13,
-        },
-        .{
-            .name = "zzon",
-            .description = "A fast, spec compliant, ZON parser and serializer for JavaScript.",
-            .language = "TypeScript",
-            .stars = 10,
-            .forks = 0,
-        },
-        .{
-            .name = "prisma-supabase",
-            .description = "Prisma generator for creating types for supabase-js/postgrest-js, without requiring a database, for faster generation times.",
-            .language = "TypeScript",
-            .stars = 8,
-            .forks = 0,
-        },
-        .{
-            .name = "enum-map-generator",
-            .description = "A VSCode extension for generating mapper from TS enum or JS enum like object.",
-            .language = "TypeScript",
-            .stars = 3,
-            .forks = 1,
-        },
-    };
+    const projects = github.getPinnedRepos(ctx.arena) catch &.{};
 
     return (
         <main @allocator={ctx.arena} class="container">
-            <header>
-                <h1>Projects</h1>
-                <p class="drag-hint">drag cards to rearrange</p>
+            <header class="hero">
+                <span class="brand">nuhu.dev</span>
+                <p class="hero-byline">Open source work by <a href="https://nurulhudaapon.com" target="_blank" class="hero-author">Nurul Huda (Apon)</a></p>
             </header>
+            <section class="projects-section">
+                <h3 class="section-heading">Featured <span class="heading-icon">↴</span></h3>
+                <a href="https://github.com/nurulhudaapon?tab=repositories" target="_blank" class="see-all-link">See all →</a>
+            </section>
             <div class="projects">
                 {for (projects) |project| (
-                    <a class="project-card" href=`https://github.com/nurulhudaapon/${project.name}` target="_blank" draggable="false">
+                    <a class="project-card" href={project.url} target="_blank" draggable="false">
                         <div class="project-header">
                             <h2>{project.name}</h2>
-                            <span class=`language {if (std.mem.eql(u8, project.language, "Zig")) "lang-zig" else "lang-ts"}`>{project.language}</span>
+                            <span class=`language {langClass(project.language)}`>{project.language}</span>
                         </div>
                         <p class="project-desc">{project.description}</p>
                         <div class="project-stats">
@@ -51,81 +26,20 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                     </a>
                 )}
             </div>
-            <script type="text/javascript">
-            {"\n" ++
-            \\(function(){
-            \\  var cards=document.querySelectorAll('.project-card');
-            \\  var area=document.querySelector('.projects');
-            \\  var rect=area.getBoundingClientRect();
-            \\  var cols=Math.min(cards.length,Math.floor(rect.width/360)||1);
-            \\  var gapX=20,gapY=20,cardW=340,cardH=200;
-            \\  var totalW=cols*cardW+(cols-1)*gapX;
-            \\  var startX=(rect.width-totalW)/2;
-            \\  cards.forEach(function(c,i){
-            \\    var col=i%cols,row=Math.floor(i/cols);
-            \\    var x=startX+col*(cardW+gapX)+(Math.random()*30-15);
-            \\    var y=row*(cardH+gapY+20)+20+(Math.random()*20-10);
-            \\    var rot=(Math.random()*6-3);
-            \\    c.style.left=x+'px';
-            \\    c.style.top=y+'px';
-            \\    c.style.transform='rotate('+rot+'deg)';
-            \\    c.dataset.rot=rot;
-            \\  });
-            \\  var drag=null,offX,offY,moved;
-            \\  function onDown(e){
-            \\    var c=e.target.closest('.project-card');
-            \\    if(!c)return;
-            \\    e.preventDefault();
-            \\    drag=c;moved=false;
-            \\    var t=e.touches?e.touches[0]:e;
-            \\    var cr=c.getBoundingClientRect();
-            \\    offX=t.clientX-cr.left;
-            \\    offY=t.clientY-cr.top;
-            \\    c.classList.add('dragging');
-            \\    c.style.transform='rotate(0deg) scale(1.04)';
-            \\    c.style.zIndex=100;
-            \\  }
-            \\  function onMove(e){
-            \\    if(!drag)return;
-            \\    e.preventDefault();
-            \\    moved=true;
-            \\    var t=e.touches?e.touches[0]:e;
-            \\    var ar=area.getBoundingClientRect();
-            \\    drag.style.left=(t.clientX-ar.left-offX)+'px';
-            \\    drag.style.top=(t.clientY-ar.top-offY)+'px';
-            \\  }
-            \\  function onUp(e){
-            \\    if(!drag)return;
-            \\    drag.classList.remove('dragging');
-            \\    drag.style.transform='rotate('+drag.dataset.rot+'deg)';
-            \\    drag.style.zIndex='';
-            \\    if(!moved){
-            \\      var href=drag.getAttribute('href');
-            \\      if(href)window.open(href,'_blank');
-            \\    }
-            \\    drag=null;
-            \\  }
-            \\  area.addEventListener('mousedown',onDown);
-            \\  area.addEventListener('mousemove',onMove);
-            \\  document.addEventListener('mouseup',onUp);
-            \\  area.addEventListener('touchstart',onDown,{passive:false});
-            \\  area.addEventListener('touchmove',onMove,{passive:false});
-            \\  document.addEventListener('touchend',onUp);
-            \\  cards.forEach(function(c){c.addEventListener('click',function(e){e.preventDefault();})});
-            \\})();
-            ++ "\n"}
+            <script type="text/javascript" @escaping={.none}>
+                {@embedFile("./../assets/scripts.js")}
             </script>
         </main>
     );
 }
 
-const Project = struct {
-    name: []const u8,
-    description: []const u8,
-    language: []const u8,
-    stars: u32,
-    forks: u32,
-};
+fn langClass(language: []const u8) []const u8 {
+    if (std.mem.eql(u8, language, "Zig")) return "lang-zig";
+    if (std.mem.eql(u8, language, "TypeScript")) return "lang-ts";
+    if (std.mem.eql(u8, language, "JavaScript")) return "lang-ts";
+    return "";
+}
 
 const std = @import("std");
 const zx = @import("zx");
+const github = @import("github.zig");
