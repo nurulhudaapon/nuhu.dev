@@ -65,6 +65,136 @@
         }
     };
 
+    // ── Sound effects (synthesized via Web Audio API) ──
+
+    var audioCtx = null;
+
+    function getAudioCtx() {
+        if (!audioCtx) {
+            try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+        }
+        return audioCtx;
+    }
+
+    function resumeAudio() {
+        var ctx = getAudioCtx();
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+    }
+
+    document.addEventListener('click', resumeAudio);
+    document.addEventListener('touchstart', resumeAudio);
+    document.addEventListener('mousedown', resumeAudio);
+    document.addEventListener('keydown', resumeAudio);
+
+    function playQuakeSound() {
+        var ctx = getAudioCtx();
+        if (!ctx) return;
+        // Low rumble: brown noise burst with frequency sweep
+        var dur = 0.8;
+        var len = ctx.sampleRate * dur;
+        var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+        var data = buf.getChannelData(0);
+        var last = 0;
+        for (var i = 0; i < len; i++) {
+            var white = Math.random() * 2 - 1;
+            last = (last + (0.02 * white)) / 1.02;
+            data[i] = last * 3.5 * (1 - i / len);
+        }
+        var src = ctx.createBufferSource();
+        src.buffer = buf;
+        var gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.6, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + dur);
+        src.connect(gain);
+        gain.connect(ctx.destination);
+        src.start();
+    }
+
+    function playSliceSound() {
+        var ctx = getAudioCtx();
+        if (!ctx) return;
+        // Metallic swoosh: high-freq noise burst with fast decay
+        var dur = 0.3;
+        var len = ctx.sampleRate * dur;
+        var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+        var data = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) {
+            var t = i / ctx.sampleRate;
+            var env = Math.exp(-t * 15);
+            data[i] = (Math.random() * 2 - 1) * env;
+        }
+        var src = ctx.createBufferSource();
+        src.buffer = buf;
+        var hp = ctx.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 3000;
+        var gain = ctx.createGain();
+        gain.gain.value = 0.5;
+        src.connect(hp);
+        hp.connect(gain);
+        gain.connect(ctx.destination);
+        src.start();
+    }
+
+    function playFixSound() {
+        var ctx = getAudioCtx();
+        if (!ctx) return;
+        // Pleasant chime: two quick ascending tones
+        [523.25, 783.99].forEach(function (freq, i) {
+            var osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            var gain = ctx.createGain();
+            var t = ctx.currentTime + i * 0.12;
+            gain.gain.setValueAtTime(0.3, t);
+            gain.gain.exponentialRampToValueAtTime(0.01, t + 0.4);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.4);
+        });
+    }
+
+    function playPickupSound() {
+        var ctx = getAudioCtx();
+        if (!ctx) return;
+        // Soft pop: short sine burst rising in pitch
+        var osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(300, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.08);
+        var gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.1);
+    }
+
+    function playDropSound() {
+        var ctx = getAudioCtx();
+        if (!ctx) return;
+        // Soft thud: short low sine dropping in pitch
+        var osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(250, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.12);
+        var gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.15);
+    }
+
+    var soundPlayers = { quake: playQuakeSound, slice: playSliceSound, fix: playFixSound, pickup: playPickupSound, drop: playDropSound };
+
+    function playSound(key) {
+        try { if (soundPlayers[key]) soundPlayers[key](); } catch (e) {}
+    }
+
     // ── Shared helpers ──
 
     function scatterCards(animate) {
@@ -103,6 +233,7 @@
     function earthquakeEffect() {
         if (triggered) return;
         activate('quake');
+        playSound('quake');
         area.classList.add('quake-shake');
         setTimeout(function () { area.classList.remove('quake-shake'); }, 600);
         scatterCards(true);
@@ -117,6 +248,7 @@
     function sliceEffect() {
         if (triggered) return;
         activate('slice');
+        playSound('slice');
         area.classList.add('slash-sweep');
         setTimeout(function () { area.classList.remove('slash-sweep'); }, 800);
         setSliceVisual(true);
@@ -145,10 +277,22 @@
         effects[effectType].restore();
     }
 
-    // ── Trigger random effect on hover ──
+    // ── Trigger random effect on hover (only after first click) ──
+
+    var userInteracted = false;
+
+    function onFirstInteraction() {
+        userInteracted = true;
+        resumeAudio();
+        document.removeEventListener('click', onFirstInteraction);
+        document.removeEventListener('touchstart', onFirstInteraction);
+    }
+
+    document.addEventListener('click', onFirstInteraction);
+    document.addEventListener('touchstart', onFirstInteraction);
 
     function triggerRandomEffect() {
-        if (triggered || enabledEffects.length === 0) return;
+        if (!userInteracted || triggered || enabledEffects.length === 0) return;
         var picked = enabledEffects[Math.floor(Math.random() * enabledEffects.length)];
         if (effects[picked]) effects[picked].trigger();
     }
@@ -171,6 +315,7 @@
             if (dx > 50 || dy > 50) allGood = false;
         });
         if (allGood) {
+            playSound('fix');
             sessionStorage.removeItem('effectState');
             sessionStorage.removeItem('effectType');
             sessionStorage.setItem('effectDone', '1');
@@ -199,6 +344,7 @@
         c.classList.add('dragging');
         c.style.transform = 'rotate(0deg) scale(1.04)';
         c.style.zIndex = 100;
+        playSound('pickup');
     }
     function onMove(e) {
         if (!drag) return;
@@ -211,6 +357,7 @@
     }
     function onUp(e) {
         if (!drag) return;
+        playSound('drop');
         drag.classList.remove('dragging');
         drag.style.transform = 'rotate(' + drag.dataset.rot + 'deg)';
         drag.style.zIndex = '';

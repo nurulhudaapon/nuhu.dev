@@ -40,6 +40,10 @@ fn langClass(language: []const u8) []const u8 {
     return "";
 }
 
+pub const options: zx.PageOptions = .{
+    .caching = .tag("10m"),
+};
+
 const std = @import("std");
 const zx = @import("zx");
 const github = @import("github.zig");
