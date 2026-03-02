@@ -303,6 +303,50 @@ body::after {
     letter-spacing: 0.02em;
 }
 
+/* ── Earthquake effect ── */
+.quake-msg {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    animation: msgFadeIn 0.4s ease both;
+}
+
+.quake-msg-success {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.15);
+}
+
+@keyframes msgFadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.quake-shake {
+    animation: quakeShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes quakeShake {
+    0%, 100% { transform: translateX(0); }
+    10%      { transform: translateX(-8px) translateY(2px); }
+    20%      { transform: translateX(7px) translateY(-3px); }
+    30%      { transform: translateX(-6px) translateY(1px); }
+    40%      { transform: translateX(5px) translateY(-2px); }
+    50%      { transform: translateX(-4px) translateY(3px); }
+    60%      { transform: translateX(4px) translateY(-1px); }
+    70%      { transform: translateX(-3px) translateY(2px); }
+    80%      { transform: translateX(2px) translateY(-1px); }
+    90%      { transform: translateX(-1px); }
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
     .project-card {
