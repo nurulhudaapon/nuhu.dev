@@ -234,6 +234,7 @@
         if (triggered) return;
         activate('quake');
         playSound('quake');
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]); // haptic feedback for quake
         area.classList.add('quake-shake');
         setTimeout(function () { area.classList.remove('quake-shake'); }, 600);
         scatterCards(true);
@@ -249,6 +250,7 @@
         if (triggered) return;
         activate('slice');
         playSound('slice');
+        if (navigator.vibrate) navigator.vibrate([80, 40, 80]); // haptic feedback for slice
         area.classList.add('slash-sweep');
         setTimeout(function () { area.classList.remove('slash-sweep'); }, 800);
         setSliceVisual(true);
@@ -345,6 +347,7 @@
         c.style.transform = 'rotate(0deg) scale(1.04)';
         c.style.zIndex = 100;
         playSound('pickup');
+        if (navigator.vibrate) navigator.vibrate(50); // haptic feedback for drag start
     }
     function onMove(e) {
         if (!drag) return;
@@ -358,6 +361,7 @@
     function onUp(e) {
         if (!drag) return;
         playSound('drop');
+        if (navigator.vibrate) navigator.vibrate(30); // haptic feedback for drag end
         drag.classList.remove('dragging');
         drag.style.transform = 'rotate(' + drag.dataset.rot + 'deg)';
         drag.style.zIndex = '';
