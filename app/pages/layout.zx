@@ -7,13 +7,17 @@ pub fn Layout(ctx: zx.LayoutContext, children: zx.Component) zx.Component {
                 <title>nuhu.dev</title>
                 <link rel="stylesheet" href="/assets/theme.css" />
                 <link rel="stylesheet" href="/assets/style.css" />
+                <tags.GtmHead />
             </head>
 
             <body>
+                <tags.GtmBody />
+
                 {children}
             </body>
         </html>
     );
 }
 
+const tags = @import("tags.zx");
 const zx = @import("zx");
