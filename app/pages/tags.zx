@@ -8,7 +8,7 @@ pub fn GtmHead(allocator: zx.Allocator) ?zx.Component {
                 \\new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                 \\j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 \\'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                \\})(window,document,'script','dataLayer','GTM-K4HPMTZ4');
+                \\})(window,document,'script','dataLayer','GTM-5GXWQSF9');
             }
         </script>
     );
@@ -24,7 +24,7 @@ pub fn GtmBody(allocator: zx.Allocator) ?zx.Component {
     );
 }
 
-const GTM_ID = "GTM-K4HPMTZ4";
+const GTM_ID = "GTM-5GXWQSF9";
 
 const zx = @import("zx");
 const std = @import("std");
