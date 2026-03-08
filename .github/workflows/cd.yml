@@ -32,7 +32,7 @@ jobs:
         uses: actions/configure-pages@v5
         
       - name: Build Site
-        run: zig build -Doptimized=ReleaseSmall
+        run: zig build --release=small
 
       - name: Export Site
         run: zig build zx -- export
