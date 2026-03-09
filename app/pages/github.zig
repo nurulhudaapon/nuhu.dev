@@ -1,8 +1,10 @@
 const std = @import("std");
 
-const GITHUB_API_URL = "https://api.github.com/users/nurulhudaapon/repos?per_page=100";
+const GITHUB_API_URLS = [_][]const u8{
+    "https://api.github.com/users/ziex-dev/repos?per_page=100",
+    "https://api.github.com/users/nurulhudaapon/repos?per_page=100",
+};
 
-// Pinned repos in display order
 const PINNED_REPOS = [_][]const u8{
     "ziex",
     "zzon",
@@ -23,31 +25,30 @@ pub const Project = struct {
     url: []const u8,
 };
 
-const FetchError = error{ FailedToFetch, FailedToParse, OutOfMemory };
-
-pub fn getPinnedRepos(allocator: std.mem.Allocator) FetchError![]Project {
+pub fn getPinnedRepos(allocator: std.mem.Allocator) ![]Project {
     var client = std.http.Client{ .allocator = allocator };
     defer client.deinit();
 
-    var aw = std.Io.Writer.Allocating.init(allocator);
+    var pinned_repos = std.ArrayList(Project).empty;
+    defer pinned_repos.deinit(allocator);
 
-    _ = client.fetch(.{
-        .method = .GET,
-        .location = .{ .url = GITHUB_API_URL },
-        .headers = .{
-            .user_agent = .{ .override = "nuhu.dev" },
-        },
-        .response_writer = &aw.writer,
-    }) catch |err| {
-        std.log.err("Failed to fetch repos: {any}", .{err});
-        return error.FailedToFetch;
-    };
+    for (GITHUB_API_URLS) |url| {
+        var aw = std.Io.Writer.Allocating.init(allocator);
+        _ = try client.fetch(.{
+            .method = .GET,
+            .location = .{ .url = url },
+            .headers = .{
+                .user_agent = .{ .override = "nuhu.dev" },
+            },
+            .response_writer = &aw.writer,
+        });
 
-    const response_text = aw.written();
-    return filterPinnedRepos(allocator, response_text) catch |err| {
-        std.log.err("Failed to parse repos: {any}", .{err});
-        return error.FailedToParse;
-    };
+        const response_text = aw.written();
+        const prs = try filterPinnedRepos(allocator, response_text);
+        try pinned_repos.appendSlice(allocator, prs);
+    }
+
+    return try pinned_repos.toOwnedSlice(allocator);
 }
 
 fn filterPinnedRepos(allocator: std.mem.Allocator, json_text: []const u8) ![]Project {
