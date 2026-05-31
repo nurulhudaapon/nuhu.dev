@@ -24,6 +24,73 @@ pub fn GtmBody(allocator: zx.Allocator) ?zx.Component {
     );
 }
 
+pub const NavProps = struct {
+    active: []const u8 = "",
+};
+
+pub fn Nav(allocator: zx.Allocator, props: NavProps) zx.Component {
+    return (
+        <nav @allocator={allocator} class="nav">
+            <a class="nav-brand" href="/">nuhu<span class="nav-brand-dot">.</span>dev</a>
+            <div class="nav-links">
+                <a class=`nav-link {activeClass(props.active, "home")}` href="/">Home</a>
+                <a class=`nav-link {activeClass(props.active, "labs")}` href="/labs">Labs</a>
+                <a class=`nav-link {activeClass(props.active, "oss")}` href="/oss">OSS</a>
+            </div>
+        </nav>
+    );
+}
+
+pub const ContactCardProps = struct {
+    variant: []const u8 = "labs",
+};
+
+pub fn ContactCard(allocator: zx.Allocator, props: ContactCardProps) zx.Component {
+    const is_home = std.mem.eql(u8, props.variant, "home");
+    return (
+        <section @allocator={allocator} class="contact-card">
+            <div class="contact-copy">
+                <span class="eyebrow">{if (is_home) "Nuhu Labs" else "Work with us"}</span>
+                <h3>Have something to build?</h3>
+                {if (is_home) (
+                    <p>
+                        Nuhu Labs partners with teams to build products from scratch
+                        or sharpen the engineering of existing systems. Take a look
+                        at what the studio is about.
+                    </p>
+                ) else (
+                    <p>
+                        Whether it's a product from scratch or an existing system that
+                        needs sharper engineering, Nuhu Labs is open to select
+                        partnerships. Tell us what you have in mind.
+                    </p>
+                )}
+            </div>
+            {if (is_home) (
+                <a class="btn btn-primary" href="/labs">Visit Nuhu Labs →</a>
+            ) else (
+                <a class="btn btn-primary" href="mailto:hello@nuhu.dev">Get in touch →</a>
+            )}
+        </section>
+    );
+}
+
+pub fn Footer(allocator: zx.Allocator) zx.Component {
+    return (
+        <footer @allocator={allocator} class="footer">
+            <span>© nuhu.dev</span>
+            <span class="footer-sep">·</span>
+            <a href="https://github.com/nurulhudaapon" target="_blank" rel="noopener">GitHub</a>
+            <span class="footer-sep">·</span>
+            <a href="https://nurulhudaapon.com" target="_blank" rel="noopener">Nurul Huda (Apon)</a>
+        </footer>
+    );
+}
+
+fn activeClass(active: []const u8, key: []const u8) []const u8 {
+    return if (std.mem.eql(u8, active, key)) "is-active" else "";
+}
+
 const GTM_ID = "GTM-5GXWQSF9";
 
 const zx = @import("zx");

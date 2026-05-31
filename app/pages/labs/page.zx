@@ -1,0 +1,63 @@
+pub fn Page(ctx: zx.PageContext) !zx.Component {
+    return (
+        <main @allocator={ctx.arena} class="container labs">
+            <tags.Nav active="labs" />
+
+            <section class="lead">
+                <span class="eyebrow">Nuhu Labs</span>
+                <h1 class="lead-title">
+                    A studio for <span class="grad">focused products</span>.
+                </h1>
+                <p class="lead-sub">
+                    Nuhu Labs is a product studio by Nurul Huda (Apon) building
+                    high-quality software that scales and stays maintainable.
+                    We partner with teams who want it engineered to last.
+                </p>
+            </section>
+
+            <section class="labs-products">
+                <div class="labs-products-head">
+                    <h3 class="section-heading">Products <span class="heading-icon">↴</span></h3>
+                </div>
+                <div class="soon-card">
+                    <div class="soon-pulse"></div>
+                    <h2>Nothing here yet</h2>
+                    <p>Our first product is in the works. Check back soon, or follow along on GitHub.</p>
+                    <a class="btn btn-ghost" href="https://github.com/nuhulabs" target="_blank" rel="noopener">
+                        Follow on GitHub →
+                    </a>
+                </div>
+            </section>
+
+            <section class="labs-values">
+                <div class="value">
+                    <h4>High quality</h4>
+                    <p>Careful engineering and a high bar for craft in every detail we ship.</p>
+                </div>
+                <div class="value">
+                    <h4>Scalable</h4>
+                    <p>Architected to grow with demand, from the first user to the millionth.</p>
+                </div>
+                <div class="value">
+                    <h4>Maintainable</h4>
+                    <p>Clean, readable systems that stay easy to change long after launch.</p>
+                </div>
+                <div class="value">
+                    <h4>Built to last</h4>
+                    <p>Durable foundations and sensible choices, made for the long run.</p>
+                </div>
+            </section>
+
+            <tags.ContactCard />
+
+            <tags.Footer />
+        </main>
+    );
+}
+
+pub const options: zx.PageOptions = .{
+    .caching = .tag("10m"),
+};
+
+const zx = @import("zx");
+const tags = @import("../tags.zx");

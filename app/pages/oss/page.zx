@@ -2,11 +2,18 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
     const projects = github.getPinnedRepos(ctx.arena) catch &.{};
 
     return (
-        <main @allocator={ctx.arena} class="container">
-            <header class="hero">
-                <span class="brand">nuhu.dev</span>
-                <p class="hero-byline">Open source work by <a href="https://nurulhudaapon.com" target="_blank" class="hero-author">Nurul Huda (Apon)</a></p>
-            </header>
+        <main @allocator={ctx.arena} class="container oss">
+            <tags.Nav active="oss" />
+            <section class="lead">
+                <span class="eyebrow">Open Source</span>
+                <h1 class="lead-title">
+                    Tools built <span class="grad">in the open</span>.
+                </h1>
+                <p class="lead-sub">
+                    Libraries, frameworks, and utilities maintained by
+                    <a href="https://nurulhudaapon.com" target="_blank" rel="noopener" class="hero-author">Nurul Huda (Apon)</a>.
+                </p>
+            </section>
             <section class="projects-section">
                 <h3 class="section-heading">Featured <span class="heading-icon">↴</span></h3>
                 <a href="https://github.com/nurulhudaapon?tab=repositories" target="_blank" class="see-all-link">See all →</a>
@@ -29,6 +36,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
             <script type="text/javascript" @escaping={.none}>
                 {@embedFile("./../../assets/scripts.js")}
             </script>
+            <tags.Footer />
         </main>
     );
 }
@@ -46,4 +54,5 @@ pub const options: zx.PageOptions = .{
 
 const std = @import("std");
 const zx = @import("zx");
+const tags = @import("../tags.zx");
 const github = @import("../github.zig");

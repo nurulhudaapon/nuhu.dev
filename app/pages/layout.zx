@@ -1,10 +1,39 @@
 pub fn Layout(ctx: zx.LayoutContext, children: zx.Component) zx.Component {
+    const path = ctx.request.pathname;
+
+    const title, const description = meta: {
+        if (std.mem.startsWith(u8, path, "/labs"))
+            break :meta .{
+                "Nuhu Labs - Product Studio by Nurul Huda (Apon)",
+                "Nuhu Labs is a product studio building high-quality software that scales and stays maintainable. Partnering with teams who want it engineered to last.",
+            };
+        if (std.mem.startsWith(u8, path, "/oss"))
+            break :meta .{
+                "Open Source - nuhu.dev",
+                "Open source libraries, frameworks, and tools maintained by Nurul Huda (Apon), from Zig to TypeScript.",
+            };
+        break :meta .{
+            "nuhu.dev - Nurul Huda (Apon)",
+            "Engineer crafting developer tooling, web infrastructure, and open source. Software that's lean, quick, and built to last.",
+        };
+    };
+
     return (
         <html @allocator={ctx.arena} lang="en-US">
             <head>
                 <meta charset="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>nuhu.dev</title>
+                <title>{title}</title>
+                <meta name="description" content={description} />
+                <meta name="author" content="Nurul Huda (Apon)" />
+                <meta name="robots" content="index, follow" />
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="og:site_name" content="nuhu.dev" />
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={description} />
                 <link rel="stylesheet" href="/assets/theme.css" />
                 <link rel="stylesheet" href="/assets/style.css" />
                 <tags.GtmHead />
@@ -21,3 +50,4 @@ pub fn Layout(ctx: zx.LayoutContext, children: zx.Component) zx.Component {
 
 const tags = @import("tags.zx");
 const zx = @import("zx");
+const std = @import("std");
