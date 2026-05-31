@@ -1,12 +1,12 @@
 const std = @import("std");
-const zx = @import("zx");
+const ziex = @import("ziex");
 
 pub fn build(b: *std.Build) !void {
     // --- Target and Optimize from `zig build` arguments ---
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    // --- ZX App Executable ---
+    // --- ziex App Executable ---
     const app_exe = b.addExecutable(.{
         .name = "nuhu_dev",
         .root_module = b.createModule(.{
@@ -16,6 +16,6 @@ pub fn build(b: *std.Build) !void {
         }),
     });
 
-    // --- ZX setup: wires dependencies and adds `zx`/`dev` build steps ---
-    _ = try zx.init(b, app_exe, .{});
+    // --- ziex setup: wires dependencies and adds `ziex`/`dev` build steps ---
+    _ = try ziex.init(b, app_exe, .{});
 }

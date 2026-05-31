@@ -26,7 +26,7 @@ pub const Project = struct {
 };
 
 pub fn getPinnedRepos(allocator: std.mem.Allocator) ![]Project {
-    var client = std.http.Client{ .allocator = allocator };
+    var client = std.http.Client{ .allocator = allocator, .io = std.Io.Threaded.global_single_threaded.io() };
     defer client.deinit();
 
     var pinned_repos = std.ArrayList(Project).empty;
