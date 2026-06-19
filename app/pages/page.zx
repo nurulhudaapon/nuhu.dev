@@ -1,4 +1,5 @@
 pub fn Page(ctx: zx.PageContext) !zx.Component {
+
     return (
         <main @allocator={ctx.arena} class="container home">
             <tags.Nav active="home" />
@@ -55,3 +56,9 @@ pub const options: zx.PageOptions = .{
 
 const zx = @import("zx");
 const tags = @import("tags.zx");
+
+const RoutePaths = enum {
+    home,
+    labs,
+    @"about/labs",
+};

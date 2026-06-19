@@ -19,14 +19,16 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                 <div class="labs-products-head">
                     <h3 class="section-heading">Products <span class="heading-icon">↴</span></h3>
                 </div>
-                <div class="soon-card">
-                    <div class="soon-pulse"></div>
-                    <h2>Nothing here yet</h2>
-                    <p>Our first product is in the works. Check back soon, or follow along on GitHub.</p>
-                    <a class="btn btn-ghost" href="https://github.com/nuhulabs" target="_blank" rel="noopener">
-                        Follow on GitHub →
-                    </a>
-                </div>
+                <a class="labs-product-card" href="/labs/byakaron">
+                    <div class="labs-product-card-head">
+                        <span class="labs-product-name">ব্যাকারণ</span>
+                        <span class="labs-product-platforms">
+                            <icons.Apple />
+                        </span>
+                    </div>
+                    <p class="labs-product-desc">Bangla keyboard with spell check and a native UI.</p>
+                    <span class="nav-card-go">Learn more →</span>
+                </a>
             </section>
 
             <section class="labs-values">
@@ -61,3 +63,4 @@ pub const options: zx.PageOptions = .{
 
 const zx = @import("zx");
 const tags = @import("../tags.zx");
+const icons = @import("../icons.zx");
