@@ -1,0 +1,56 @@
+pub fn GET(ctx: zx.RouteContext) !void {
+    const og_type = ctx.request.params.get("type") orelse "home";
+    const og_data = getOgImageData(og_type);
+
+    const og_template = OgTemplate(ctx.arena, og_data);
+    var aw = std.Io.Writer.Allocating.init(ctx.arena);
+
+    try og_template.render(&aw.writer, .{});
+    const svg_text = aw.written();
+    const png = try lunasvg.svgToPngAlloc(ctx.arena, svg_text, 1200, 630, 0xffffffff);
+
+    ctx.response.text(png);
+    ctx.response.setContentType(.@"image/png");
+}
+
+
+fn getOgImageData(slug: []const u8) OgTemplateProps {
+    for (og_images) |og_image| {
+        if (std.mem.eql(u8, og_image.slug, slug)) {
+            return og_image;
+        }
+    }
+    return default_og_image;
+}
+
+const default_og_image: OgTemplateProps = .{
+    .slug = "home",
+    .title = "nuhu.dev",
+    .subtitle = "A blog about programming, technology, and more.",
+};
+const og_images = [_]OgTemplateProps{
+    default_og_image,
+    .{
+        .slug = "byakaron",
+        .title = "Byakaron",
+        .subtitle = "The last Bangla keyboard you'll ever need.",
+    },
+};
+
+fn staticParams(ctx: *zx.StaticContext) !void {
+    for (og_images) |og_image| {
+        try ctx.params.add(.{ .slug = og_image.slug });
+    }
+}
+
+pub const options = zx.RouteOptions{
+    .static = staticParams,
+};
+
+
+const OgTemplate = @import("template.zx").OgTemplate;
+const OgTemplateProps = @import("template.zx").OgTemplateProps;
+
+const lunasvg = @import("lunasvg");
+const zx = @import("zx");
+const std = @import("std");
