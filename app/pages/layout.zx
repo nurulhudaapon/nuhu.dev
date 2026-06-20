@@ -2,6 +2,11 @@ pub fn Layout(ctx: zx.LayoutContext, children: zx.Component) zx.Component {
     const path = ctx.request.pathname;
 
     const title, const description = meta: {
+        if (std.mem.startsWith(u8, path, "/labs/byakaron"))
+            break :meta .{
+                "Byakaron - Bangla Keyboard by Nuhu Labs",
+                "The last Bangla keyboard you'll ever need.",
+            };
         if (std.mem.startsWith(u8, path, "/labs"))
             break :meta .{
                 "Nuhu Labs - Product Studio by Nurul Huda (Apon)",
