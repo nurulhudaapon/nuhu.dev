@@ -24,28 +24,28 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
 
                 <div class="platform-tabs">
                     <label class="platform-tab" for="tab-macos">
-                        <icons.Apple @allocator={ctx.arena} />
+                        <icons.Apple />
                         <span class="platform-name">macOS</span>
                         <span class="platform-status status-available">Available</span>
-                        <a class="platform-download" href="https://github.com/nuhulabs/Byakaron-Assets/raw/main/release/Byakaron-macos-0.1.0.dmg"><icons.Download @allocator={ctx.arena} /></a>
+                        <a class="platform-download" href="https://github.com/nuhulabs/Byakaron-Assets/raw/main/release/Byakaron-macos-0.1.0.dmg"><icons.Download /></a>
                     </label>
                     <label class="platform-tab" for="tab-ios">
-                        <icons.IPhone @allocator={ctx.arena} />
+                        <icons.IPhone />
                         <span class="platform-name">iOS</span>
                         <span class="platform-status status-soon">Coming soon</span>
-                        <span class="platform-download platform-download-disabled"><icons.Download @allocator={ctx.arena} /></span>
+                        <span class="platform-download platform-download-disabled"><icons.Download /></span>
                     </label>
                     <label class="platform-tab" for="tab-android">
-                        <icons.Android @allocator={ctx.arena} />
+                        <icons.Android />
                         <span class="platform-name">Android</span>
                         <span class="platform-status status-soon">Coming soon</span>
-                        <span class="platform-download platform-download-disabled"><icons.Download @allocator={ctx.arena} /></span>
+                        <span class="platform-download platform-download-disabled"><icons.Download /></span>
                     </label>
                     <label class="platform-tab" for="tab-windows">
-                        <icons.Windows @allocator={ctx.arena} />
+                        <icons.Windows />
                         <span class="platform-name">Windows</span>
                         <span class="platform-status status-soon">Coming soon</span>
-                        <span class="platform-download platform-download-disabled"><icons.Download @allocator={ctx.arena} /></span>
+                        <span class="platform-download platform-download-disabled"><icons.Download /></span>
                     </label>
                 </div>
 
@@ -60,7 +60,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                                 <span class="platform-placeholder-label">macOS demo</span>
                             </div>
                             <video controls autoplay muted loop playsinline preload="auto" class="platform-panel-video" onloadeddata="this.classList.add('is-ready')" oncanplay="this.classList.add('is-ready')">
-                                <source src="https://github.com/nuhulabs/Byakaron-Assets/raw/main/demo/macos.mov" type="video/mp4"/>
+                                <source src="https://raw.githubusercontent.com/nuhulabs/Byakaron-Assets/main/demo/macos.mov" type="video/mp4"/>
                             </video>
                         </div>
                     </div>
