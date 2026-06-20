@@ -10,6 +10,14 @@ pub fn build(b: *std.Build) void {
     const static_lib = addLunasvg(b, target, optimize, .static);
     _ = addLunasvg(b, target, optimize, .shared);
 
+    const lunasvg_mod = b.addModule("lunasvg", .{
+        .root_source_file = b.path("src/root.zig"),
+        .target = target,
+        .optimize = optimize,
+        .link_libcpp = true,
+    });
+    lunasvg_mod.linkLibrary(static_lib);
+
     {
         const mod = b.createModule(.{
             .target = target,
@@ -100,6 +108,11 @@ pub fn addLunasvg(
         .root = lunasvg_dep.path("."),
         .files = &plutovg_c_files,
         .flags = &.{"-std=c11"},
+    });
+    mod.addCSourceFiles(.{
+        .root = b.path("."),
+        .files = &.{"src/lunasvg_shim.cpp"},
+        .flags = &.{"-std=c++17"},
     });
     b.installArtifact(lib);
     return lib;
