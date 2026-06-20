@@ -1,5 +1,5 @@
 pub const OgTemplateProps = struct {
-    slug: [] const u8,
+    path: [] const u8,
     title: []const u8,
     subtitle: []const u8,
 };
