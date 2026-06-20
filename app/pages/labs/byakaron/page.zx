@@ -53,31 +53,30 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                     <div class="platform-panel" id="panel-macos">
                         <div class="platform-panel-info">
                             <h3>Byakaron for macOS</h3>
-                            <p>A native macOS keyboard extension with real-time Bangla spell checking. Works system-wide — in any app you type in.</p>
-                            <a class="btn btn-primary" href="https://github.com/nuhulabs/byakaron/releases/latest/download/Byakaron.dmg">Download →</a>
+                            <p>A native macOS keyboard extension with real-time Bangla spell checking.</p>
                         </div>
-                        <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
+                        // <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
                     </div>
                     <div class="platform-panel" id="panel-ios">
                         <div class="platform-panel-info">
                             <h3>Byakaron for iOS</h3>
                             <p>A custom keyboard for iPhone and iPad with Bangla spell check built in. Coming soon.</p>
                         </div>
-                        <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
+                        // <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
                     </div>
                     <div class="platform-panel" id="panel-android">
                         <div class="platform-panel-info">
                             <h3>Byakaron for Android</h3>
                             <p>A Bangla keyboard with spell check for Android devices. Coming soon.</p>
                         </div>
-                        <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
+                        // <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
                     </div>
                     <div class="platform-panel" id="panel-windows">
                         <div class="platform-panel-info">
                             <h3>Byakaron for Windows</h3>
                             <p>Native Windows support with Bangla spell checking. Coming soon.</p>
                         </div>
-                        <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
+                        // <img class="platform-panel-gif" src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Typing demo" />
                     </div>
                 </div>
             </section>
