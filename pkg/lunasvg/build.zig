@@ -20,10 +20,11 @@ pub fn build(b: *std.Build) void {
             .name = "svg2png",
             .root_module = mod,
         });
-        mod.addIncludePath(lunasvg_dep.path("3rdparty/stb"));
+        mod.addIncludePath(lunasvg_dep.path("include"));
         mod.addCSourceFiles(.{
             .root = lunasvg_root,
-            .files = &.{"svg2png.cpp"},
+            .files = &.{"examples/svg2png.cpp"},
+            .flags = &.{"-std=c++17"},
         });
 
         mod.linkLibrary(static_lib);
@@ -65,11 +66,16 @@ pub fn addLunasvg(
     };
 
     mod.addIncludePath(lunasvg_dep.path("include"));
-    mod.addIncludePath(lunasvg_dep.path("3rdparty/plutovg"));
+    mod.addIncludePath(lunasvg_dep.path("source"));
+    mod.addIncludePath(lunasvg_dep.path("plutovg/include"));
+    mod.addIncludePath(lunasvg_dep.path("plutovg/source"));
+    mod.addCMacro("PLUTOVG_BUILD", "");
 
     switch (kind) {
         .static => {
+            mod.addCMacro("LUNASVG_BUILD", "");
             mod.addCMacro("LUNASVG_BUILD_STATIC", "");
+            mod.addCMacro("PLUTOVG_BUILD_STATIC", "");
             lib.installHeader(
                 lunasvg_dep.path("include/lunasvg.h"),
                 "lunasvg-unconfigured.h",
@@ -87,41 +93,41 @@ pub fn addLunasvg(
     }
     mod.addCSourceFiles(.{
         .root = lunasvg_dep.path("."),
-        .files = &lunasvg_files,
+        .files = &lunasvg_cpp_files,
+        .flags = &.{"-std=c++17"},
+    });
+    mod.addCSourceFiles(.{
+        .root = lunasvg_dep.path("."),
+        .files = &plutovg_c_files,
+        .flags = &.{"-std=c11"},
     });
     b.installArtifact(lib);
     return lib;
 }
 
-const lunasvg_files = [_][]const u8{
+const lunasvg_cpp_files = [_][]const u8{
     "source/lunasvg.cpp",
-    "source/element.cpp",
-    "source/property.cpp",
-    "source/parser.cpp",
-    "source/layoutcontext.cpp",
-    "source/canvas.cpp",
-    "source/clippathelement.cpp",
-    "source/defselement.cpp",
-    "source/gelement.cpp",
-    "source/geometryelement.cpp",
-    "source/graphicselement.cpp",
-    "source/maskelement.cpp",
-    "source/markerelement.cpp",
-    "source/paintelement.cpp",
-    "source/stopelement.cpp",
-    "source/styledelement.cpp",
-    "source/styleelement.cpp",
+    "source/graphics.cpp",
     "source/svgelement.cpp",
-    "source/symbolelement.cpp",
-    "source/useelement.cpp",
+    "source/svggeometryelement.cpp",
+    "source/svglayoutstate.cpp",
+    "source/svgpaintelement.cpp",
+    "source/svgparser.cpp",
+    "source/svgproperty.cpp",
+    "source/svgrenderstate.cpp",
+    "source/svgtextelement.cpp",
+};
 
-    "3rdparty/plutovg/plutovg.c",
-    "3rdparty/plutovg/plutovg-paint.c",
-    "3rdparty/plutovg/plutovg-geometry.c",
-    "3rdparty/plutovg/plutovg-blend.c",
-    "3rdparty/plutovg/plutovg-rle.c",
-    "3rdparty/plutovg/plutovg-dash.c",
-    "3rdparty/plutovg/plutovg-ft-raster.c",
-    "3rdparty/plutovg/plutovg-ft-stroker.c",
-    "3rdparty/plutovg/plutovg-ft-math.c",
+const plutovg_c_files = [_][]const u8{
+    "plutovg/source/plutovg-blend.c",
+    "plutovg/source/plutovg-canvas.c",
+    "plutovg/source/plutovg-font.c",
+    "plutovg/source/plutovg-matrix.c",
+    "plutovg/source/plutovg-paint.c",
+    "plutovg/source/plutovg-path.c",
+    "plutovg/source/plutovg-rasterize.c",
+    "plutovg/source/plutovg-surface.c",
+    "plutovg/source/plutovg-ft-math.c",
+    "plutovg/source/plutovg-ft-raster.c",
+    "plutovg/source/plutovg-ft-stroker.c",
 };
