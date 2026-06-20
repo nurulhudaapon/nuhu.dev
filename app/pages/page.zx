@@ -18,7 +18,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                 <div class="lead-actions">
                     <a class="btn btn-primary" href="/labs">Nuhu Labs →</a>
                     <a class="btn btn-ghost" href="/oss">Open Source</a>
-                    <a class="btn btn-ghost" href="https://nurulhudaapon.com" target="_blank" rel="noopener">About me</a>
+                    // <a class="btn btn-ghost" href="https://nurulhudaapon.com" target="_blank" rel="noopener">About me</a>
                 </div>
             </section>
 
