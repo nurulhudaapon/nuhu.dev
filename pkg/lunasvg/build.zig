@@ -78,6 +78,7 @@ pub fn addLunasvg(
     mod.addIncludePath(lunasvg_dep.path("plutovg/include"));
     mod.addIncludePath(lunasvg_dep.path("plutovg/source"));
     mod.addCMacro("PLUTOVG_BUILD", "");
+    mod.addCMacro("PATH_MAX", "4096");
 
     switch (kind) {
         .static => {
