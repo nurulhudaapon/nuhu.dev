@@ -8,6 +8,10 @@
             .url = "git+https://github.com/ziex-dev/ziex?ref=v0.1.0-dev.1252#47fba110d324ed21cd8701299352b3bda320362c",
             .hash = "ziex-0.1.0-dev-Z3YcverCngH0wFQEtc6mwQtSzbUiEzqilWlQqpOTYtKa",
         },
+        .byakaron_assets = .{
+            .url = "git+https://github.com/nuhulabs/Byakaron-Assets.git#5e863754087a4854dfd3e15eae04a9160db5fa01",
+            .hash = "N-V-__8AAJKUSQBMVcOJZofSWC8Llg8KRJu2a-fn0Q_gtWlq",
+        },
     },
     .paths = .{
         "build.zig",

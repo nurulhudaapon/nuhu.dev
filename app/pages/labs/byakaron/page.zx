@@ -12,7 +12,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                     Native UI. Built for how Bangla is actually written.
                 </p>
                 <div class="lead-actions">
-                    <a class="btn btn-primary" href="https://github.com/nuhulabs/Byakaron-Assets/raw/main/release/Byakaron-macos-0.1.0.dmg">Download for macOS →</a>
+                    <a class="btn btn-primary" href="/assets/_/release/Byakaron-macos-0.1.0.dmg">Download for macOS →</a>
                 </div>
             </section>
 
@@ -27,7 +27,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                         <icons.Apple />
                         <span class="platform-name">macOS</span>
                         <span class="platform-status status-available">Available</span>
-                        <a class="platform-download" href="https://github.com/nuhulabs/Byakaron-Assets/raw/main/release/Byakaron-macos-0.1.0.dmg"><icons.Download /></a>
+                        <a class="platform-download" href="/assets/_/release/Byakaron-macos-0.1.0.dmg"><icons.Download /></a>
                     </label>
                     <label class="platform-tab" for="tab-ios">
                         <icons.IPhone />
@@ -60,7 +60,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                                 <span class="platform-placeholder-label">macOS demo</span>
                             </div>
                             <video controls autoplay muted loop playsinline preload="auto" class="platform-panel-video" onloadeddata="this.classList.add('is-ready')" oncanplay="this.classList.add('is-ready')">
-                                <source src="https://raw.githubusercontent.com/nuhulabs/Byakaron-Assets/main/demo/macos.mov" type="video/mp4"/>
+                                <source src="/assets/_/demo/macos.mov" type="video/mp4"/>
                             </video>
                         </div>
                     </div>

@@ -17,5 +17,16 @@ pub fn build(b: *std.Build) !void {
     });
 
     // --- ziex setup: wires dependencies and adds `ziex`/`dev` build steps ---
-    _ = try ziex.init(b, app_exe, .{});
+    _ = try ziex.init(b, app_exe, .{ .cli = .{ .optimize = optimize } });
+
+    // Assets
+    {
+        const byakaron_assets_dep = b.dependency("byakaron_assets", .{});
+        const install_byakaron_assets = b.addInstallDirectory(.{
+            .source_dir = byakaron_assets_dep.path("."),
+            .install_dir = .prefix,
+            .install_subdir = "static/assets/_",
+        });
+        b.default_step.dependOn(&install_byakaron_assets.step);
+    }
 }
