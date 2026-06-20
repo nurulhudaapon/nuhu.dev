@@ -9,7 +9,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                     Bangla keyboard with <span class="grad">spell check</span>.
                 </h1>
                 <p class="lead-sub">
-                    Native UI. Built for how Bangla is actually written.
+                    The last Bangla keyboard you'll ever need.
                 </p>
                 <div class="lead-actions">
                     <a class="btn btn-primary" href="/assets/_/release/Byakaron-macos-0.1.0.dmg">Download for macOS →</a>
@@ -103,7 +103,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
             <section class="byakaron-features">
                 <div class="bfeature">
                     <h4>Spell checker</h4>
-                    <p>Helps you write correctly in Bangla.</p>
+                    <p>Helps you write correctly spelled Bangla.</p>
                 </div>
                 <div class="bfeature">
                     <h4>Native UI</h4>

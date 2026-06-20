@@ -21,9 +21,14 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                 </div>
                 <a class="labs-product-card" href="/labs/byakaron">
                     <div class="labs-product-card-head">
-                        <span class="labs-product-name">ব্যাকারণ</span>
+                        <span class="labs-product-name">ব্যাকারণ · Byakaron</span>
                         <span class="labs-product-platforms">
                             <icons.Apple />
+                            <div style="display: inline-flex; gap: 4px; opacity: 0.5;">
+                                <icons.IPhone />
+                                <icons.Android />
+                                <icons.Windows />
+                            </div>
                         </span>
                     </div>
                     <p class="labs-product-desc">Bangla keyboard with spell check and a native UI.</p>

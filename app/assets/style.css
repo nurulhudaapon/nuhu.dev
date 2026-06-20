@@ -394,6 +394,22 @@ a {
     box-shadow: 0 4px 16px var(--accent-glow);
 }
 
+.byakaron-platforms:has(.platform-tab:hover) #tab-macos:checked~.platform-tabs .platform-tab:nth-child(1),
+.byakaron-platforms:has(.platform-tab:hover) #tab-ios:checked~.platform-tabs .platform-tab:nth-child(2),
+.byakaron-platforms:has(.platform-tab:hover) #tab-android:checked~.platform-tabs .platform-tab:nth-child(3),
+.byakaron-platforms:has(.platform-tab:hover) #tab-windows:checked~.platform-tabs .platform-tab:nth-child(4) {
+    border-color: var(--card-border);
+    box-shadow: none;
+}
+
+.byakaron-platforms:has(.platform-tab:nth-child(1):hover) #tab-macos~.platform-tabs .platform-tab:nth-child(1),
+.byakaron-platforms:has(.platform-tab:nth-child(2):hover) #tab-ios~.platform-tabs .platform-tab:nth-child(2),
+.byakaron-platforms:has(.platform-tab:nth-child(3):hover) #tab-android~.platform-tabs .platform-tab:nth-child(3),
+.byakaron-platforms:has(.platform-tab:nth-child(4):hover) #tab-windows~.platform-tabs .platform-tab:nth-child(4) {
+    border-color: var(--card-border-hover);
+    box-shadow: 0 4px 16px var(--accent-glow);
+}
+
 .platform-download {
     position: absolute;
     bottom: 1rem;
@@ -424,11 +440,39 @@ a {
     grid-template-rows: auto;
 }
 
+@keyframes platform-panel-enter {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 #tab-macos:checked~.platform-panels .platform-panel:nth-child(1),
 #tab-ios:checked~.platform-panels .platform-panel:nth-child(2),
 #tab-android:checked~.platform-panels .platform-panel:nth-child(3),
 #tab-windows:checked~.platform-panels .platform-panel:nth-child(4) {
     display: grid;
+    animation: platform-panel-enter 0.22s ease both;
+}
+
+.byakaron-platforms:has(.platform-tab:hover) #tab-macos:checked~.platform-panels .platform-panel:nth-child(1),
+.byakaron-platforms:has(.platform-tab:hover) #tab-ios:checked~.platform-panels .platform-panel:nth-child(2),
+.byakaron-platforms:has(.platform-tab:hover) #tab-android:checked~.platform-panels .platform-panel:nth-child(3),
+.byakaron-platforms:has(.platform-tab:hover) #tab-windows:checked~.platform-panels .platform-panel:nth-child(4) {
+    display: none;
+}
+
+.byakaron-platforms:has(.platform-tab:nth-child(1):hover) #tab-macos~.platform-panels .platform-panel:nth-child(1),
+.byakaron-platforms:has(.platform-tab:nth-child(2):hover) #tab-ios~.platform-panels .platform-panel:nth-child(2),
+.byakaron-platforms:has(.platform-tab:nth-child(3):hover) #tab-android~.platform-panels .platform-panel:nth-child(3),
+.byakaron-platforms:has(.platform-tab:nth-child(4):hover) #tab-windows~.platform-panels .platform-panel:nth-child(4) {
+    display: grid;
+    animation: platform-panel-enter 0.22s ease both;
 }
 
 .platform-panel-info {

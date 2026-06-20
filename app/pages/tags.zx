@@ -80,9 +80,9 @@ pub fn Footer(allocator: zx.Allocator) zx.Component {
         <footer @allocator={allocator} class="footer">
             <span>© nuhu.dev</span>
             <span class="footer-sep">·</span>
-            <a href="https://github.com/nurulhudaapon" target="_blank" rel="noopener">GitHub</a>
-            <span class="footer-sep">·</span>
-            <a href="https://nurulhudaapon.com" target="_blank" rel="noopener">Nurul Huda (Apon)</a>
+            // <a href="https://github.com/nurulhudaapon" target="_blank" rel="noopener">GitHub</a>
+            // <span class="footer-sep">·</span>
+            // <a href="https://nurulhudaapon.com" target="_blank" rel="noopener">Nurul Huda (Apon)</a>
         </footer>
     );
 }
