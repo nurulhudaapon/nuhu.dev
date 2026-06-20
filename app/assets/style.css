@@ -310,9 +310,20 @@ a {
 }
 
 @keyframes soonPulse {
-    0%   { box-shadow: 0 0 0 0 var(--accent-glow); opacity: 1; }
-    70%  { box-shadow: 0 0 0 16px transparent; opacity: 0.7; }
-    100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+    0% {
+        box-shadow: 0 0 0 0 var(--accent-glow);
+        opacity: 1;
+    }
+
+    70% {
+        box-shadow: 0 0 0 16px transparent;
+        opacity: 0.7;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+        opacity: 1;
+    }
 }
 
 .labs-values {
@@ -370,15 +381,15 @@ a {
     transition: border-color 0.2s ease;
 }
 
-.platform-tab > svg {
+.platform-tab>svg {
     color: var(--text-faint);
     margin-bottom: 0.25rem;
 }
 
-#tab-macos:checked ~ .platform-tabs .platform-tab:nth-child(1),
-#tab-ios:checked ~ .platform-tabs .platform-tab:nth-child(2),
-#tab-android:checked ~ .platform-tabs .platform-tab:nth-child(3),
-#tab-windows:checked ~ .platform-tabs .platform-tab:nth-child(4) {
+#tab-macos:checked~.platform-tabs .platform-tab:nth-child(1),
+#tab-ios:checked~.platform-tabs .platform-tab:nth-child(2),
+#tab-android:checked~.platform-tabs .platform-tab:nth-child(3),
+#tab-windows:checked~.platform-tabs .platform-tab:nth-child(4) {
     border-color: var(--card-border-hover);
     box-shadow: 0 4px 16px var(--accent-glow);
 }
@@ -407,17 +418,17 @@ a {
 
 .platform-panel {
     display: none;
-    flex-direction: row;
     gap: 2rem;
     padding: 2rem;
     align-items: center;
+    grid-template-rows: auto;
 }
 
-#tab-macos:checked ~ .platform-panels .platform-panel:nth-child(1),
-#tab-ios:checked ~ .platform-panels .platform-panel:nth-child(2),
-#tab-android:checked ~ .platform-panels .platform-panel:nth-child(3),
-#tab-windows:checked ~ .platform-panels .platform-panel:nth-child(4) {
-    display: flex;
+#tab-macos:checked~.platform-panels .platform-panel:nth-child(1),
+#tab-ios:checked~.platform-panels .platform-panel:nth-child(2),
+#tab-android:checked~.platform-panels .platform-panel:nth-child(3),
+#tab-windows:checked~.platform-panels .platform-panel:nth-child(4) {
+    display: grid;
 }
 
 .platform-panel-info {
@@ -440,13 +451,58 @@ a {
     margin: 0 0 1.25rem;
 }
 
-.platform-panel-gif {
-    width: 200px;
-    height: 140px;
-    border-radius: 10px;
-    object-fit: cover;
-    flex-shrink: 0;
-    opacity: 0.85;
+.platform-panel-demo {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 1024 / 600;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+.platform-panel-placeholder,
+.platform-panel-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.platform-panel-placeholder {
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025));
+    background-size: 24px 24px, 24px 24px, 100% 100%;
+    color: var(--text-faint);
+}
+
+.platform-placeholder-label {
+    padding: 0.45rem 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.platform-panel-video {
+    display: block;
+    object-fit: contain;
+    background: transparent;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.platform-panel-video.is-ready {
+    opacity: 1;
 }
 
 @media (max-width: 640px) {
@@ -455,12 +511,9 @@ a {
     }
 
     .platform-panel {
-        flex-direction: column;
-    }
-
-    .platform-panel-gif {
-        width: 100%;
-        height: 160px;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.25rem;
     }
 }
 
@@ -626,9 +679,17 @@ body::after {
 }
 
 @keyframes float {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(60px, 40px) scale(1.1); }
-    100% { transform: translate(-30px, 80px) scale(0.95); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(60px, 40px) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-30px, 80px) scale(0.95);
+    }
 }
 
 /* ── Container ── */
@@ -769,16 +830,28 @@ body::after {
         opacity: 0;
         transform: scale(0.8) translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
 }
 
-.project-card:nth-child(1) { animation-delay: 0s; }
-.project-card:nth-child(2) { animation-delay: 0.1s; }
-.project-card:nth-child(3) { animation-delay: 0.2s; }
-.project-card:nth-child(4) { animation-delay: 0.3s; }
+.project-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.project-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.project-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.project-card:nth-child(4) {
+    animation-delay: 0.3s;
+}
 
 /* Subtle shimmer overlay */
 .project-card::before {
@@ -786,12 +859,10 @@ body::after {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(
-        135deg,
-        var(--card-shimmer) 0%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.02) 100%
-    );
+    background: linear-gradient(135deg,
+            var(--card-shimmer) 0%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.02) 100%);
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
@@ -905,8 +976,15 @@ body::after {
 }
 
 @keyframes msgFadeIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .quake-shake {
@@ -914,16 +992,47 @@ body::after {
 }
 
 @keyframes quakeShake {
-    0%, 100% { transform: translateX(0); }
-    10%      { transform: translateX(-8px) translateY(2px); }
-    20%      { transform: translateX(7px) translateY(-3px); }
-    30%      { transform: translateX(-6px) translateY(1px); }
-    40%      { transform: translateX(5px) translateY(-2px); }
-    50%      { transform: translateX(-4px) translateY(3px); }
-    60%      { transform: translateX(4px) translateY(-1px); }
-    70%      { transform: translateX(-3px) translateY(2px); }
-    80%      { transform: translateX(2px) translateY(-1px); }
-    90%      { transform: translateX(-1px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10% {
+        transform: translateX(-8px) translateY(2px);
+    }
+
+    20% {
+        transform: translateX(7px) translateY(-3px);
+    }
+
+    30% {
+        transform: translateX(-6px) translateY(1px);
+    }
+
+    40% {
+        transform: translateX(5px) translateY(-2px);
+    }
+
+    50% {
+        transform: translateX(-4px) translateY(3px);
+    }
+
+    60% {
+        transform: translateX(4px) translateY(-1px);
+    }
+
+    70% {
+        transform: translateX(-3px) translateY(2px);
+    }
+
+    80% {
+        transform: translateX(2px) translateY(-1px);
+    }
+
+    90% {
+        transform: translateX(-1px);
+    }
 }
 
 /* ── Slice effect ── */
@@ -931,13 +1040,11 @@ body::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        135deg,
-        transparent calc(50% - 1.5px),
-        rgba(255, 80, 80, 0.7) calc(50% - 1.5px),
-        rgba(255, 80, 80, 0.7) calc(50% + 1.5px),
-        transparent calc(50% + 1.5px)
-    );
+    background: linear-gradient(135deg,
+            transparent calc(50% - 1.5px),
+            rgba(255, 80, 80, 0.7) calc(50% - 1.5px),
+            rgba(255, 80, 80, 0.7) calc(50% + 1.5px),
+            transparent calc(50% + 1.5px));
     pointer-events: none;
     border-radius: inherit;
     z-index: 2;
@@ -945,8 +1052,13 @@ body::after {
 }
 
 @keyframes sliceFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .slash-sweep {
@@ -969,8 +1081,15 @@ body::after {
 }
 
 @keyframes slashSweep {
-    from { left: -10%; opacity: 1; }
-    to   { left: 110%; opacity: 0; }
+    from {
+        left: -10%;
+        opacity: 1;
+    }
+
+    to {
+        left: 110%;
+        opacity: 0;
+    }
 }
 
 /* ── Responsive ── */
