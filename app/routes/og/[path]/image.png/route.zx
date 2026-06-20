@@ -1,5 +1,5 @@
 pub fn GET(ctx: zx.RouteContext) !void {
-    const og_type = ctx.request.params.get("path") orelse "home";
+    const og_type = ctx.request.params.get("path") orelse "labs";
     const og_data = getOgImageData(og_type);
 
     const og_template = OgTemplate(ctx.arena, og_data);
@@ -24,14 +24,14 @@ fn getOgImageData(path: []const u8) OgTemplateProps {
 }
 
 const default_og_image: OgTemplateProps = .{
-    .path = "/labs",
+    .path = "labs",
     .title = "nuhu.dev",
     .subtitle = "A studio for focused products.",
 };
 const og_images = [_]OgTemplateProps{
     default_og_image,
     .{
-        .path = "/labs/byakaron",
+        .path = "byakaron",
         .title = "Byakaron",
         .subtitle = "The last Bangla keyboard you'll ever need.",
     },

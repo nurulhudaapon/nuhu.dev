@@ -18,13 +18,7 @@ pub fn Layout(ctx: zx.LayoutContext, children: zx.Component) zx.Component {
         };
     };
 
-    const domain = "https://nuhu.dev";
-    const is_labs_page = std.mem.startsWith(u8, path, "/labs");
-    
-    const default_og_image_url = domain ++ "/nuhu-dev-og.png";
-    const labs_og_image_url = ctx.fmt("{s}/og{s}/image.png", .{domain, path}) catch default_og_image_url;
-
-    const og_image_url = if (is_labs_page) labs_og_image_url else default_og_image_url;
+    const og_image_url = getOgImageUrl(ctx);
 
     return (
         <html @allocator={ctx.arena} lang="en-US">
@@ -60,6 +54,24 @@ pub fn Layout(ctx: zx.LayoutContext, children: zx.Component) zx.Component {
         </html>
     );
 }
+
+const domain = "https://nuhu.dev";
+fn getOgImageUrl(ctx: zx.LayoutContext) []const u8 {
+    const path = std.meta.stringToEnum(app.RoutePaths, ctx.request.pathname) orelse app.RoutePaths.@"/";
+    const default_og_image_url = domain ++ "/nuhu-dev-og.png";
+
+    const og_type = switch (path) {
+        .@"/" => return default_og_image_url,
+        .@"/labs" => "labs",
+        .@"/labs/byakaron" => "byakaron",
+
+        else => return default_og_image_url,
+    };
+
+    return ctx.fmt("{s}/og/{s}/image.png", .{ domain, og_type }) catch default_og_image_url;
+}
+
+const app = @import("app");
 
 const tags = @import("tags.zx");
 const zx = @import("zx");
