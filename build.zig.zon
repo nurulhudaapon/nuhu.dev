@@ -12,6 +12,9 @@
             .url = "git+https://github.com/nuhulabs/Byakaron-Assets.git#5e863754087a4854dfd3e15eae04a9160db5fa01",
             .hash = "N-V-__8AAJKUSQBMVcOJZofSWC8Llg8KRJu2a-fn0Q_gtWlq",
         },
+        .lunasvg = .{
+            .path = "pkg/lunasvg",
+        },
     },
     .paths = .{
         "build.zig",

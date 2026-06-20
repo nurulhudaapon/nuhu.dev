@@ -1,0 +1,17 @@
+pub fn GET(ctx: zx.RouteContext) !void {
+
+    const og_template = OgTemplate(ctx.arena);
+    var aw = std.Io.Writer.Allocating.init(ctx.arena);
+
+    try og_template.render(&aw.writer, .{});
+    const svg_text = aw.written();
+
+    // TODO: render the svg to png using lunasvg and return the png instead of svg
+
+    ctx.response.text(svg_text);
+    ctx.response.setContentType(.@"image/svg+xml");
+}
+
+const OgTemplate = @import("template.zx").OgTemplate;
+const zx = @import("zx");
+const std = @import("std");

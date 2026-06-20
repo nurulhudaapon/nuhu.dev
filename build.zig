@@ -16,6 +16,8 @@ pub fn build(b: *std.Build) !void {
         }),
     });
 
+    // app_exe.root_module.addImport("lunasvg", b.dependency("lunasvg", .{}).module("lunasvg"));
+
     // --- ziex setup: wires dependencies and adds `ziex`/`dev` build steps ---
     _ = try ziex.init(b, app_exe, .{ .cli = .{ .optimize = optimize } });
 
