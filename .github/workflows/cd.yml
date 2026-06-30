@@ -26,7 +26,7 @@ jobs:
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
-          version: 0.16.0
+          version: 0.17.0-dev.956+2dca73595
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -37,7 +37,7 @@ jobs:
           sudo apt-get install -y fonts-dejavu fonts-liberation fontconfig
 
       - name: Build Site
-        run: zig build zx -- export --build-args="--release=small"
+        run: zig build zx -- export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
