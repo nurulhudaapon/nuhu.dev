@@ -2,11 +2,11 @@
     .name = .nuhu_dev,
     .version = "0.0.0",
     .fingerprint = 0xb6da4707ea599fe0,
-    .minimum_zig_version = "0.17.0-dev.956+2dca73595",
+    .minimum_zig_version = "0.17.0-dev.1158+1d1193aa7",
     .dependencies = .{
         .ziex = .{
-            .url = "git+https://github.com/ziex-dev/ziex#67ec7fea66664e95f0d4457a63fb5dfa13627089",
-            .hash = "ziex-0.1.0-dev-Z3YcvWUskwH2Lo_lOjmqCS-YEeqiFPxhSZ1j7beuTKCH",
+            .url = "git+https://github.com/ziex-dev/ziex#cc4b775af5d2a8365942100a2ff2584a66d9cba0",
+            .hash = "ziex-0.1.0-dev-Z3YcvVZskwElyhIZK_Dik5oNBfvq3zQQtkETaCrZrfAS",
         },
         .byakaron_assets = .{
             .url = "git+https://github.com/nuhulabs/Byakaron-Assets.git#5e863754087a4854dfd3e15eae04a9160db5fa01",
