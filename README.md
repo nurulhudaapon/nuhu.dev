@@ -12,7 +12,7 @@
 </p>
 
 ## Developing
-Requirements: `zig` (0.16.0)
+Requirements: `zig` (0.17.0-dev.1158)
 
 Start dev server (http://localhost:3000):
 ```bash
@@ -22,7 +22,6 @@ zig build dev
 Build static site (output in `dist/`):
 
 ```bash
-zig build --release=small
 zig build zx -- export
 ```
 Built with
