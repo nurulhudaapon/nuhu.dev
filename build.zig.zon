@@ -5,8 +5,8 @@
     .minimum_zig_version = "0.17.0-dev.1158+1d1193aa7",
     .dependencies = .{
         .ziex = .{
-            .url = "git+https://github.com/ziex-dev/ziex#cc4b775af5d2a8365942100a2ff2584a66d9cba0",
-            .hash = "ziex-0.1.0-dev-Z3YcvVZskwElyhIZK_Dik5oNBfvq3zQQtkETaCrZrfAS",
+            .url = "git+https://github.com/ziex-dev/ziex#6f1fc8e1b7c2b3eb8408af580f2467df41b54d53",
+            .hash = "ziex-0.1.0-dev-Z3YcvUsPlwFgvvxgLCVUYmJsxeurFYMfO52fpu3bd8JN",
         },
         .byakaron_assets = .{
             .url = "git+https://github.com/nuhulabs/Byakaron-Assets.git#5e863754087a4854dfd3e15eae04a9160db5fa01",

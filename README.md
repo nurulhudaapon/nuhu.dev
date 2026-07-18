@@ -5,9 +5,9 @@
 
 <p></p>
 <p align="center">
-	<a href="/">Website</a> ·
-	<a href="/labs">Labs</a> ·
-	<a href="/oss">OSS</a> ·
+	<a href="https://nuhu.dev/">Website</a> ·
+	<a href="https://nuhu.dev/labs">Labs</a> ·
+	<a href="https://nuhu.dev/oss">OSS</a> ·
 	<a href="mailto:info@nuhu.dev">Get in touch →</a>
 </p>
 
