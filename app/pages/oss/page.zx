@@ -3,7 +3,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
 
     return (
         <main @allocator={ctx.arena} class="container oss">
-            <tags.Nav active="oss" />
+            <components.Nav active="oss" />
             <section class="lead">
                 <span class="eyebrow">Open Source</span>
                 <h1 class="lead-title">
@@ -36,7 +36,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
             <script type="text/javascript" @escaping={.none}>
                 {@embedFile("./../../assets/scripts.js")}
             </script>
-            <tags.Footer />
+            <components.Footer />
         </main>
     );
 }
@@ -54,5 +54,5 @@ pub const options: zx.PageOptions = .{
 
 const std = @import("std");
 const zx = @import("zx");
-const tags = @import("../tags.zx");
+const components = @import("../components.zx");
 const github = @import("../github.zig");

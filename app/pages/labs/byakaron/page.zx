@@ -1,7 +1,7 @@
 pub fn Page(ctx: zx.PageContext) !zx.Component {
     return (
         <main @allocator={ctx.arena} class="container byakaron">
-            <tags.Nav active="" />
+            <components.Nav active="" />
 
             <section class="lead">
                 <span class="eyebrow">ব্যাকারণ · Byakaron</span>
@@ -115,7 +115,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                 </div>
             </section>
 
-            <tags.Footer />
+            <components.Footer />
         </main>
     );
 }
@@ -125,5 +125,5 @@ pub const options: zx.PageOptions = .{
 };
 
 const zx = @import("zx");
-const tags = @import("../../tags.zx");
+const components = @import("../../components.zx");
 const icons = @import("../../icons.zx");

@@ -1,6 +1,7 @@
 pub fn GET(ctx: zx.RouteContext) !void {
-    const og_type = ctx.request.params.get("path") orelse "labs";
-    const og_data = getOgImageData(og_type);
+    const pathname = ctx.request.pathname;
+    const og_name = pathname["/og/".len..(pathname.len - ".png".len)];
+    const og_data = getOgImageData(og_name);
 
     const og_template = OgTemplate(ctx.arena, og_data);
     var aw = std.Io.Writer.Allocating.init(ctx.arena);
@@ -13,13 +14,10 @@ pub fn GET(ctx: zx.RouteContext) !void {
     ctx.response.setContentType(.@"image/png");
 }
 
-
 fn getOgImageData(path: []const u8) OgTemplateProps {
-    for (og_images) |og_image| {
-        if (std.mem.eql(u8, og_image.path, path)) {
-            return og_image;
-        }
-    }
+    for (og_images) |og_image|
+        if (std.mem.eql(u8, og_image.path, path)) return og_image;
+
     return default_og_image;
 }
 
@@ -31,22 +29,21 @@ const default_og_image: OgTemplateProps = .{
 const og_images = [_]OgTemplateProps{
     default_og_image,
     .{
-        .path = "byakaron",
+        .path = "labs/byakaron",
         .title = "Byakaron",
         .subtitle = "The last Bangla keyboard you'll ever need.",
     },
 };
 
 fn staticParams(ctx: *zx.StaticContext) !void {
-    for (og_images) |og_image| {
-        try ctx.params.add(.{ .path = og_image.path });
+    inline for (og_images) |og_image| {
+        try ctx.params.add(.{ .@"*" = og_image.path ++ ".png" });
     }
 }
 
 pub const options = zx.RouteOptions{
     .static = staticParams,
 };
-
 
 const OgTemplate = @import("template.zx").OgTemplate;
 const OgTemplateProps = @import("template.zx").OgTemplateProps;

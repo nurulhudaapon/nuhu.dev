@@ -12,7 +12,7 @@
 </p>
 
 ## Developing
-Requirements: `zig` (0.17.0-dev.1158)
+Requirements: `zig` ([version](https://github.com/nurulhudaapon/nuhu.dev/blob/main/build.zig.zon#L5))
 
 Start dev server (http://localhost:3000):
 ```bash
