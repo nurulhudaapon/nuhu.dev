@@ -9,8 +9,8 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                     A studio for <span class="grad">focused products</span>.
                 </h1>
                 <p class="lead-sub">
-                    Nuhu Labs is a product studio by Nurul Huda (Apon) building
-                    high-quality software that scales and stays maintainable.
+                    Nuhu Labs is a product studio by Nurul Huda (Apon) building{" "}
+                    high-quality software that scales and stays maintainable.{" "}
                     We partner with teams who want it engineered to last.
                 </p>
             </section>

@@ -11,7 +11,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                 </h1>
                 <p class="lead-sub">
                     Libraries, frameworks, and utilities maintained by
-                    <a href="https://nurulhudaapon.com" target="_blank" rel="noopener" class="hero-author">Nurul Huda (Apon)</a>.
+                    <a href="https://nurulhudaapon.com" target="_blank" rel="noopener" class="hero-author"> Nurul Huda (Apon)</a>.
                 </p>
             </section>
             <section class="projects-section">
