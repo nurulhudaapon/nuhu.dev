@@ -22,17 +22,12 @@ fn getOgImageData(path: []const u8) OgTemplateProps {
 }
 
 const default_og_image: OgTemplateProps = .{
-    .path = "labs",
-    .title = "nuhu.dev",
-    .subtitle = "A studio for focused products.",
+    .path = "oss",
+    .title = "Open Source",
+    .subtitle = "Tools built in the open.",
 };
 const og_images = [_]OgTemplateProps{
     default_og_image,
-    .{
-        .path = "labs/byakaron",
-        .title = "Byakaron",
-        .subtitle = "The last Bangla keyboard you'll ever need.",
-    },
 };
 
 fn staticParams(ctx: *zx.StaticContext) !void {

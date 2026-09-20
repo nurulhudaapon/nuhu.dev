@@ -6,7 +6,6 @@
 <p></p>
 <p align="center">
 	<a href="https://nuhu.dev/">Website</a> ·
-	<a href="https://nuhu.dev/labs">Labs</a> ·
 	<a href="https://nuhu.dev/oss">OSS</a> ·
 	<a href="mailto:info@nuhu.dev">Get in touch →</a>
 </p>
@@ -24,6 +23,9 @@ Build static site (output in `dist/`):
 ```bash
 zig build zx -- export
 ```
+
+Optional: include Nuhu Labs links with `-Dlabs=true` (off by default).
+
 Built with
 
 - Ziex: https://ziex.dev

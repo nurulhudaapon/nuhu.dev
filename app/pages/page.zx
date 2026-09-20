@@ -1,4 +1,5 @@
 pub fn Page(ctx: zx.PageContext) !zx.Component {
+    const oss_btn_class = if (config.labs) "btn btn-ghost" else "btn btn-primary";
 
     return (
         <main @allocator={ctx.arena} class="container home">
@@ -16,19 +17,23 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                     open source. Software that's lean, quick, and built to last.
                 </p>
                 <div class="lead-actions">
-                    <a class="btn btn-primary" href="/labs">Nuhu Labs →</a>
-                    <a class="btn btn-ghost" href="/oss">Open Source</a>
+                    {if (config.labs) (
+                        <a class="btn btn-primary" href="https://nuhulabs.com" target="_blank" rel="noopener">Nuhu Labs →</a>
+                    )}
+                    <a class={oss_btn_class} href="/oss">Open Source</a>
                     // <a class="btn btn-ghost" href="https://nurulhudaapon.com" target="_blank" rel="noopener">About me</a>
                 </div>
             </section>
 
             <section class="cards-grid">
-                <a class="nav-card" href="/labs">
-                    <span class="nav-card-tag">Company</span>
-                    <h2>Nuhu Labs</h2>
-                    <p>A product studio building focused software, open to select partnerships.</p>
-                    <span class="nav-card-go">Explore →</span>
-                </a>
+                {if (config.labs) (
+                    <a class="nav-card" href="https://nuhulabs.com" target="_blank" rel="noopener">
+                        <span class="nav-card-tag">Company</span>
+                        <h2>Nuhu Labs</h2>
+                        <p>A product studio building focused software, open to select partnerships.</p>
+                        <span class="nav-card-go">Explore →</span>
+                    </a>
+                )}
                 <a class="nav-card" href="/oss">
                     <span class="nav-card-tag">Open Source</span>
                     <h2>OSS Projects</h2>
@@ -43,7 +48,7 @@ pub fn Page(ctx: zx.PageContext) !zx.Component {
                 </a>
             </section>
 
-            <components.ContactCard variant="home" />
+            <components.ContactCard />
             <components.Footer />
         </main>
     );
@@ -55,9 +60,4 @@ pub const options: zx.PageOptions = .{
 
 const zx = @import("zx");
 const components = @import("components.zx");
-
-const RoutePaths = enum {
-    home,
-    labs,
-    @"about/labs",
-};
+const config = @import("config");

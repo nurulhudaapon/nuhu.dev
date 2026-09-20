@@ -5,6 +5,7 @@ pub fn build(b: *std.Build) !void {
     // --- Target and Optimize from `zig build` arguments ---
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+    const enable_labs = b.option(bool, "labs", "Show Nuhu Labs links and CTAs") orelse false;
 
     // --- ziex App Executable ---
     const app_exe = b.addExecutable(.{
@@ -16,6 +17,10 @@ pub fn build(b: *std.Build) !void {
         }),
     });
 
+    const config = b.addOptions();
+    config.addOption(bool, "labs", enable_labs);
+    app_exe.root_module.addOptions("config", config);
+
     app_exe.root_module.addImport("lunasvg", b.dependency("lunasvg", .{
         .target = target,
         .optimize = optimize,
@@ -23,15 +28,4 @@ pub fn build(b: *std.Build) !void {
 
     // --- ziex setup: wires dependencies and adds `ziex`/`dev` build steps ---
     _ = try ziex.init(b, app_exe, .{ .cli = .{ .optimize = optimize } });
-
-    // Assets
-    {
-        const byakaron_assets_dep = b.dependency("byakaron_assets", .{});
-        const install_byakaron_assets = b.addInstallDirectory(.{
-            .source_dir = byakaron_assets_dep.path("."),
-            .install_dir = .prefix,
-            .install_subdir = "static/assets/_",
-        });
-        b.default_step.dependOn(&install_byakaron_assets.step);
-    }
 }

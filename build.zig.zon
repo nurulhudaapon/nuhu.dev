@@ -2,15 +2,11 @@
     .name = .nuhu_dev,
     .version = "0.1.0",
     .fingerprint = 0xb6da4707ea599fe0,
-    .minimum_zig_version = "0.17.0-dev.1456+2b1c6633a",
+    .minimum_zig_version = "0.17.0-dev.2131+d08989840",
     .dependencies = .{
         .ziex = .{
-            .url = "git+https://github.com/ziex-dev/ziex#96abc181e9fa0ee8b2335e8c63068d20ac744018",
-            .hash = "ziex-0.1.0-dev-Z3YcvdjQmQHrDFQN95rGHatPIdINegJ-qaLv7nXby6Lt",
-        },
-        .byakaron_assets = .{
-            .url = "git+https://github.com/nuhulabs/Byakaron-Assets.git#5e863754087a4854dfd3e15eae04a9160db5fa01",
-            .hash = "N-V-__8AAJKUSQBMVcOJZofSWC8Llg8KRJu2a-fn0Q_gtWlq",
+            .url = "git+https://github.com/ziex-dev/ziex#030ae03f531cf24943ede1ab7e337c58455d7d89",
+            .hash = "ziex-0.1.0-dev-Z3YcvXfCmwG7l7nGY0oqd1CoOCUGcYV7gVKU3xfjZHHk",
         },
         .lunasvg = .{
             .url = "git+https://github.com/nuhulabs/lunasvg.git#3a977d33d137795f04f3dd7df00298f1d1b729de",
